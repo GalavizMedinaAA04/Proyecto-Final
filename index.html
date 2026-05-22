@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="es" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
@@ -26,13 +26,25 @@
         <section id="hero" class="hero-section">
             <div class="hero-content">
                 <div class="avatar-placeholder">
-                    <img src="https://via.placeholder.com/150" alt="Aldebarán" class="profile-img">
+                    <img src="assets/img/Aldebaran_Galaviz.jpeg" alt="Aldebarán" class="profile-img">
                 </div>
                 <h1>Aldebarán Antonino Galaviz Medina</h1>
                 <h2>Computer Systems Engineering Student</h2>
                 <p>Welcome to my interactive 3D portfolio.</p>
             </div>
-            <div id="canvas-container"></div>
+            <model-viewer 
+                id="canvas-container"
+                src="assets/models/habitacion_isometrica.glb" 
+                camera-controls 
+                auto-rotate 
+                shadow-intensity="1"
+                environment-image="neutral"
+                exposure="1"
+                alt="Un modelo 3D de una habitación isométrica">
+                <div class="progress-bar hide" slot="progress-bar">
+                    <div class="update-bar"></div>
+                </div>
+            </model-viewer>
         </section>
 
         <section id="about" class="section">
@@ -79,10 +91,8 @@
         <p>&copy; 2026 Aldebarán Antonino Galaviz Medina. Built with Three.js</p>
     </footer>
 
-    <!-- Three.js from CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <!-- Google Model Viewer -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 
     <script src="script.js"></script>
 </body>
