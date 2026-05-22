@@ -13,6 +13,20 @@ themeToggleBtn.addEventListener('click', () => {
     }
 });
 
+// --- Intercept console.error to get the exact error message ---
+let lastConsoleError = "";
+const originalConsoleError = console.error;
+console.error = function(...args) {
+    lastConsoleError = args.map(a => {
+        if (a instanceof Error) return a.message + '\n' + a.stack;
+        if (typeof a === 'object') {
+            try { return JSON.stringify(a); } catch(e) { return String(a); }
+        }
+        return String(a);
+    }).join(' ');
+    originalConsoleError.apply(console, args);
+};
+
 // --- Model Viewer Logic ---
 document.addEventListener('DOMContentLoaded', () => {
     const modelViewer = document.querySelector('model-viewer');
@@ -32,12 +46,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         modelViewer.addEventListener('error', (event) => {
-            console.error("Error loading 3D model:", event);
             let errorMessage = "Error desconocido";
             if (event.detail && event.detail.type) {
                 errorMessage = event.detail.type;
             }
-            alert(`Error al cargar el modelo 3D (${errorMessage}). Asegúrate de estar usando Live Server y no abriendo el archivo localmente con doble click.`);
+            
+            // Show the exact internal error that caused the loadfailure
+            alert(`Error interno del modelo: ${errorMessage}\n\nMotivo exacto: ${lastConsoleError.substring(0, 400)}`);
             progress.classList.add('hide');
         });
     }
